@@ -4,9 +4,11 @@ import {useNavigate} from "react-router-dom"
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Modal from 'react-modal';
 import axios from "axios";
+import  "./complete.css";
+import RegisterForm from './signupmodal';
 const customStyles = {
   content: {
-    top: '50%',
+    top: '70%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
@@ -25,6 +27,18 @@ const LoginModal = ({ isOpen, closeModal }) => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+
+    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+
+      const openSignupModal = () => {
+        setIsSignupModalOpen(true);
+        
+      };
+    
+      const closeSignupModal = () => {
+        setIsSignupModalOpen(false);
+      };
+
 
   
     const handleSubmit = async (e) => {
@@ -54,63 +68,20 @@ const LoginModal = ({ isOpen, closeModal }) => {
       style={customStyles}
       contentLabel="Login Modal"
     >
-      <h2>Login</h2>
+      <h2>Login to your account </h2>
+      
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <form className='form' onSubmit={handleSubmit}>
         <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} /><br />
         <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} /><br />
-        <button type="submit">Login</button>
-        <button type="button" onClick={closeModal}>Close</button>
+        <button className='button-submit' type="submit">Login</button>
+        <p onClick={openSignupModal}>Already Have an Account?Click Here</p>
+        <RegisterForm isOpen={isSignupModalOpen} closeModal={closeSignupModal} />
+        <button className='close' type="button" onClick={closeModal}>X</button>
+        
       </form>
     
-      <style>
-      {`
       
-      input {
-        width:230px;
-        margin-left:0;
-        margin-top: 30px;
-        border: 1px;
-        border-width: 1px;
-        border-style: none;
-        border-color: gray;
-        border-radius: 4px;
-        height: 35px;
-        // outline-style: solid; 
-    }
-    input:hover {
-    width:230px;
-        margin-top: 30px;
-        border-width: 1px;
-        border-radius: 1px;
-        height: 35px;
-        outline-style: groove;
-        background-color: rgb(152, 152, 209);
-    }
-
-    .form{
-       height:600px;
-        width: 400px;
-        padding: 20px;
-        z-index: 1;
-        /* background-color: black; */
-        opacity: 0.8;
-        margin-top: 5%;
-        backdrop-filter: blur(10px)
-       
-    }
-    button{
-        margin: 15px;
-        border: 2px;
-        background-color: blue;
-        color: white;
-        text-align: center;
-        height: 40px;
-        width: 100px;
-        border-radius: 6px;
-    }
-       `}
-      </style>
     </Modal>
   );
 };

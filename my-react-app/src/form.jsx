@@ -1,5 +1,9 @@
 import React,{useState} from 'react';
 import axios from "axios";
+import "./form.css"
+import "./navbar.css"
+import LoginModal from './complete';
+import RegisterForm from './signupmodal';
 function Form() {
 
   const [formData, setFormData] = useState({
@@ -10,6 +14,25 @@ function Form() {
     phone: '',
     message: '',
 });
+const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+const openLoginModal = () => {
+  setIsLoginModalOpen(true);
+};
+
+const closeLoginModal = () => {
+  setIsLoginModalOpen(false);
+};
+
+const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+
+const openSignupModal = () => {
+  setIsSignupModalOpen(true);
+};
+
+const closeSignupModal = () => {
+  setIsSignupModalOpen(false);
+};
 
 
 const handleChange = (e) => {
@@ -37,14 +60,41 @@ const handleSubmit = async (e) => {
       </head>
       <body>
         <div id="navbar"></div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
+        {/* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> */}
+        {/* <script>
           {`
           $(function(){
             $("#navbar").load("navbar.html");
           });
           `}
-        </script>
+          
+        </script> */}
+        <nav className="navbar">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <a href="#" className="nav-link">Home</a>
+          </li>
+          <li className="nav-item">
+            <a href="#" className="nav-link">About</a>
+          </li>
+          <li className="nav-item">
+            <a href="#" className="nav-link">Services</a>
+          </li>
+          <ul className="nav-button">
+            <li className='nav-button-item'>
+              <div className="dropdown">
+                <p className="dropbutton">Register</p>
+                <div className="dropdown-content">
+                  <button id="u" className="btn" onClick={openLoginModal}>Login</button>
+                  <LoginModal isOpen={isLoginModalOpen} closeModal={closeLoginModal} />
+                  <button id="u" className="btn-1" onClick={openSignupModal}>Signup</button>
+                  <RegisterForm isOpen={isSignupModalOpen} closeModal={closeSignupModal} />
+                </div>
+              </div>
+            </li>
+          </ul>
+        </ul>
+      </nav>
         <div className="container">
           <div className="form-container">
             <div className="left-container">
@@ -58,8 +108,8 @@ const handleSubmit = async (e) => {
             <div className="right-container">
               <div className="right-inner-container">
                 <form onSubmit={handleSubmit}>
-                  <h2 className="lg-view">Contact</h2>
-                  <h2 className="sm-view">Welcome</h2>
+                  <h2 className="lg-view">Contact Form</h2>
+                  {/* <h2 className="sm-view">Welcome</h2> */}
                   <p>* Required</p>
                   <div className="social-container">
                     <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -89,163 +139,8 @@ const handleSubmit = async (e) => {
             </div>
           </div>
         </div>
-        <style>
-          {`
-          @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
-          * {
-          box-sizing: border-box;
-          margin: 0;
-        }
-    
-        :root {
-          --teal: #00b4cf;
-          --white: #ffffff;
-        }
-    
-        body {
-          background: linear-gradient(90deg, #BE8CEF 0%, rgba(61, 46, 232, 0.83) 100%);
-    
-    
-        }
-    
-        .container {
-          margin-top: 10px;
-          background-color: var(--white);
-          border-radius: 5px;
-          box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-            0 10px 10px rgba(0, 0, 0, 0.22);
-          position: relative;
-          overflow: hidden;
-          width: 768px;
-          max-width: 100%;
-          min-height: 550px;
-          min-width: 370px;
-        }
-    
-        h2 {
-          font-size: 2rem;
-          margin-bottom: 1rem;
-        }
-    
-        .form-container {
-          display: flex;
-        }
-    
-        .left-container {
-          flex: 1;
-          height: 550px;
-          background-color: var(--teal);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: var(--white);
-        }
-    
-        .left-container p {
-          font-size: 0.9rem;
-        }
-    
-        .right-container {
-          display: flex;
-          flex: 1;
-          height: 460px;
-          background-color: var(--white);
-          justify-content: center;
-          align-items: center;
-        }
-    
-        .right-inner-container {
-          width: 70%;
-          height: 80%;
-          text-align: center;
-        }
-    
-        .left-inner-container {
-          height: 50%;
-          width: 80%;
-          text-align: center;
-          line-height: 22px;
-        }
-    
-        input,
-        textarea {
-          background-color: #eee;
-          border: none;
-          padding: 12px 15px;
-          margin: 8px 0;
-          width: 100%;
-          font-size: 0.8rem;
-        }
-    
-        input:focus,
-        textarea:focus {
-          outline: 1px solid var(--teal);
-        }
-    
-        .gender-selection {
-          margin: 8px 0;
-          display: flex;
-          align-items: center;
-          justify-content: start;
-        }
-    
-        .gender-selection p {
-          margin-right: 10px;
-          font-size: 0.8rem;
-        }
-    
-        .gender-selection label {
-          margin-right: 15px;
-          font-size: 0.8rem;
-          display: flex;
-          align-items: center;
-        }
-    
-        .gender-selection input[type="radio"] {
-          margin-right: 2px;
-        }
-    
-    
-        button {
-          border-radius: 20px;
-          border: 1px solid var(--teal);
-          background-color: var(--teal);
-          color: #FFFFFF;
-          font-size: 12px;
-          font-weight: bold;
-          padding: 12px 45px;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-          transition: transform 80ms ease-in;
-          cursor: pointer;
-        }
-    
-        button:hover {
-          opacity: 0.7;
-        }
-    
-        @media only screen and (max-width: 600px) {
-          .left-container {
-            display: none;
-          }
-    
-          .lg-view {
-            display: none;
-          }
-        }
-    
-        @media only screen and (min-width: 600px) {
-          .sm-view {
-            display: none;
-          }
-        }
-    
-        form p {
-          text-align: left;
-        }
-          `}
-        </style>
+        
+       
       </body>
     </html>
   );
